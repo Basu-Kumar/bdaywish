@@ -36,38 +36,30 @@
         z-index: 2;
       }
 
-      h1 {
-        font-size: clamp(1.5rem, 5vw, 2.5rem);
+      .countdown {
+        font-size: clamp(3rem, 10vw, 6rem);
         opacity: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        border-right: 3px solid white;
-        margin-bottom: 2rem;
-        animation: typewriter 4s steps(30) forwards,
-          blink 0.7s step-end infinite;
+        animation: fadeInOut 1s ease-in-out forwards;
       }
 
       h2 {
         font-size: clamp(2rem, 6vw, 3.5rem);
         opacity: 0;
-        animation: fadeInScale 3s ease-in 4s forwards;
         text-align: center;
       }
 
-      @keyframes typewriter {
-        from {
-          width: 0;
-          opacity: 1;
+      @keyframes fadeInOut {
+        0% {
+          opacity: 0;
+          transform: scale(0.5);
         }
-        to {
-          width: 100%;
-          opacity: 1;
-        }
-      }
-
-      @keyframes blink {
         50% {
-          border-color: transparent;
+          opacity: 1;
+          transform: scale(1.2);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(1);
         }
       }
 
@@ -155,14 +147,73 @@
         }
       }
 
+      .audio-controls {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 10px;
+        border-radius: 50px;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .audio-btn {
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      .audio-btn:hover {
+        transform: scale(1.1);
+        background: white;
+      }
+
+      .audio-btn svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .audio-btn.playing {
+        background: #ff6f61;
+      }
+
+      .volume-control {
+        width: 100px;
+        height: 4px;
+        -webkit-appearance: none;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 2px;
+        outline: none;
+      }
+
+      .volume-control::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .volume-control::-webkit-slider-thumb:hover {
+        transform: scale(1.2);
+      }
+
       /* Mobile Optimization */
       @media (max-width: 768px) {
-        h1 {
-          font-size: clamp(1.2rem, 4vw, 2rem);
-          white-space: normal;
-          border-right: none;
-        }
-
         .balloon {
           --balloon-size: 30px;
           width: var(--balloon-size);
@@ -173,12 +224,53 @@
   </head>
   <body>
     <div class="container">
-      <h1 id="intro">Trust Me, I am an Engineer 🚀</h1>
-      <h2 id="bday">Happy Birthday, Bhabhijaan...! 🎉</h2>
+      <h1 id="countdown" class="countdown">3</h1>
+      <h2 id="bday" style="animation: none; opacity: 0">
+        Happy Birthday, Bhabhijaan...! 🎉
+      </h2>
     </div>
 
+    <div class="audio-controls">
+      <button class="audio-btn" id="playPauseBtn" aria-label="Play/Pause Music">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <polygon points="5 3 19 12 5 21 5 3" class="play-icon" />
+          <g class="pause-icon" style="display: none">
+            <line x1="6" y1="4" x2="6" y2="20" />
+            <line x1="18" y1="4" x2="18" y2="20" />
+          </g>
+        </svg>
+      </button>
+      <input
+        type="range"
+        class="volume-control"
+        id="volumeControl"
+        min="0"
+        max="1"
+        step="0.1"
+        value="0.5"
+      />
+    </div>
+
+    <audio id="bgMusic" preload="auto">
+      <source
+        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+        type="audio/mpeg"
+      />
+      <source
+        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+        type="audio/mpeg"
+      />
+      Your browser does not support the audio element.
+    </audio>
+
     <script>
-      // Enhanced Balloon Generation with better space filling
+      // Balloon Generation
       const colors = [
         "#FF6F61",
         "#6B00B6",
@@ -196,25 +288,21 @@
         const color = colors[Math.floor(Math.random() * colors.length)];
         balloon.style.setProperty("--balloon-color", color);
 
-        // Set position with provided coordinates or random if not provided
         balloon.style.left = x ? `${x}vw` : `${Math.random() * 90}vw`;
         balloon.style.bottom = y ? `${y}vh` : `-${Math.random() * 20}vh`;
 
-        // Randomize animation duration and delay
         const duration = Math.random() * 4 + 5;
         balloon.style.setProperty("--float-duration", `${duration}s`);
         balloon.style.animationDelay = `${Math.random() * 5}s`;
 
         document.body.appendChild(balloon);
 
-        // Remove and recreate balloon after animation
         setTimeout(() => {
           balloon.remove();
           createBalloon();
         }, duration * 1000);
       }
 
-      // Create grid of balloons to fill space
       function createBalloonGrid() {
         const cols = 10;
         const rows = 8;
@@ -231,17 +319,15 @@
         }
       }
 
-      // Initial balloon creation
       createBalloonGrid();
 
-      // Continuously add random balloons
       setInterval(() => {
         if (document.querySelectorAll(".balloon").length < 50) {
           createBalloon();
         }
       }, 1000);
 
-      // Enhanced Fireworks
+      // Fireworks
       function createFirework() {
         const firework = document.createElement("div");
         firework.className = "firework";
@@ -261,7 +347,6 @@
 
       setInterval(createFirework, Math.random() * 500 + 300);
 
-      // Interactive fireworks
       document.addEventListener("click", (e) => {
         const firework = document.createElement("div");
         firework.className = "firework";
@@ -278,22 +363,94 @@
         setTimeout(() => firework.remove(), 2000);
       });
 
-      // Remove intro text after birthday wish appears
-      setTimeout(() => {
-        const intro = document.getElementById("intro");
-        intro.style.animation = "fadeOut 1s forwards";
-        setTimeout(() => intro.remove(), 1000);
-      }, 7000); // Adjusted timing to match when birthday wish appears
+      // Countdown Animation
+      function startCountdown() {
+        const countdown = document.getElementById("countdown");
+        const bday = document.getElementById("bday");
+        let count = 3;
 
-      // Add fadeOut animation
-      const style = document.createElement("style");
-      style.textContent = `
-        @keyframes fadeOut {
-          from { opacity: 1; }
-          to { opacity: 0; }
+        const countInterval = setInterval(() => {
+          count--;
+          if (count > 0) {
+            countdown.style.animation = "none";
+            countdown.offsetHeight; // Trigger reflow
+            countdown.textContent = count;
+            countdown.style.animation = "fadeInOut 1s ease-in-out forwards";
+          } else if (count === 0) {
+            countdown.textContent = count;
+            countdown.style.animation = "fadeInOut 1s ease-in-out forwards";
+            setTimeout(() => {
+              countdown.remove();
+              bday.style.animation = "fadeInScale 3s ease-in forwards";
+            }, 1000);
+            clearInterval(countInterval);
+          }
+        }, 1000);
+      }
+
+      // Start countdown immediately
+      startCountdown();
+
+      // Audio Control System
+      const audio = document.getElementById("bgMusic");
+      const playPauseBtn = document.getElementById("playPauseBtn");
+      const volumeControl = document.getElementById("volumeControl");
+      const playIcon = playPauseBtn.querySelector(".play-icon");
+      const pauseIcon = playPauseBtn.querySelector(".pause-icon");
+
+      audio.volume = 0.5;
+
+      function togglePlay() {
+        if (audio.paused) {
+          const playPromise = audio.play();
+          if (playPromise !== undefined) {
+            playPromise
+              .then((_) => {
+                playIcon.style.display = "none";
+                pauseIcon.style.display = "block";
+                playPauseBtn.classList.add("playing");
+              })
+              .catch((error) => {
+                console.log("Playback prevented by browser");
+              });
+          }
+        } else {
+          audio.pause();
+          playIcon.style.display = "block";
+          pauseIcon.style.display = "none";
+          playPauseBtn.classList.remove("playing");
         }
-      `;
-      document.head.appendChild(style);
+      }
+
+      playPauseBtn.addEventListener("click", togglePlay);
+      volumeControl.addEventListener("input", (e) => {
+        audio.volume = e.target.value;
+      });
+
+      audio.addEventListener("ended", function () {
+        audio.currentTime = 0;
+        audio.play().catch((e) => console.log("Autoplay prevented"));
+      });
+
+      document.body.addEventListener(
+        "click",
+        function initAudio() {
+          togglePlay();
+          document.body.removeEventListener("click", initAudio);
+        },
+        { once: true }
+      );
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          audio.pause();
+        }
+      });
+
+      document.addEventListener("touchstart", () => {
+        const controls = document.querySelector(".audio-controls");
+        controls.style.opacity = "1";
+      });
     </script>
   </body>
 </html>
