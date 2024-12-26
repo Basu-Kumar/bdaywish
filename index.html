@@ -5,39 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Happy Birthday</title>
     <style>
+      :root {
+        --primary-gradient: linear-gradient(135deg, #0a2a43, #ff6f61);
+        --text-color: white;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
         margin: 0;
         overflow: hidden;
         font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #0a2a43, #ff6f61);
+        background: var(--primary-gradient);
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-        color: white;
+        min-height: 100vh;
+        color: var(--text-color);
         position: relative;
       }
 
-      h1 {
-        position: absolute;
-        top: 10%;
+      .container {
+        text-align: center;
+        padding: 1rem;
         z-index: 2;
-        font-size: 2.5rem;
+      }
+
+      h1 {
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
         opacity: 0;
         white-space: nowrap;
         overflow: hidden;
         border-right: 3px solid white;
+        margin-bottom: 2rem;
         animation: typewriter 4s steps(30) forwards,
           blink 0.7s step-end infinite;
       }
 
       h2 {
-        position: absolute;
-        top: 50%;
-        z-index: 2;
-        font-size: 3rem;
+        font-size: clamp(2rem, 6vw, 3.5rem);
         opacity: 0;
-        animation: fadeIn 3s ease-in 4s forwards;
+        animation: fadeInScale 3s ease-in 4s forwards;
         text-align: center;
       }
 
@@ -48,40 +61,44 @@
         }
         to {
           width: 100%;
-        }
-      }
-
-      @keyframes blink {
-        from {
-          border-color: white;
-        }
-        to {
-          border-color: transparent;
-        }
-      }
-
-      @keyframes fadeIn {
-        0% {
-          opacity: 0;
-        }
-        100% {
           opacity: 1;
         }
       }
 
+      @keyframes blink {
+        50% {
+          border-color: transparent;
+        }
+      }
+
+      @keyframes fadeInScale {
+        0% {
+          opacity: 0;
+          transform: scale(0.5);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
       .balloon {
-        width: 50px;
-        height: 70px;
+        width: clamp(30px, 8vw, 50px);
+        height: clamp(42px, 11vw, 70px);
         background: radial-gradient(
           circle,
-          white 0%,
+          var(--balloon-color, white) 0%,
           rgba(255, 255, 255, 0.7) 70%,
           transparent
         );
         position: absolute;
         border-radius: 50%;
-        animation: float 6s infinite ease-in-out;
+        animation: float var(--float-duration, 6s) infinite ease-in-out;
         z-index: 1;
+        transform-origin: center bottom;
       }
 
       .balloon::after {
@@ -91,28 +108,32 @@
         left: 50%;
         width: 2px;
         height: 20px;
-        background: white;
+        background: var(--balloon-color, white);
         transform: translateX(-50%);
       }
 
       @keyframes float {
-        0% {
-          transform: translateY(0);
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        25% {
+          transform: translateY(-50px) rotate(5deg);
         }
         50% {
-          transform: translateY(-100px);
+          transform: translateY(-100px) rotate(-5deg);
         }
-        100% {
-          transform: translateY(0);
+        75% {
+          transform: translateY(-50px) rotate(5deg);
         }
       }
 
       .firework {
         position: absolute;
-        width: 10px;
-        height: 10px;
+        width: clamp(5px, 2vw, 10px);
+        height: clamp(5px, 2vw, 10px);
         border-radius: 50%;
-        background: radial-gradient(circle, red, yellow, transparent);
+        transform-origin: center;
         animation: firework-animation 2s ease-out infinite;
         pointer-events: none;
         z-index: 1;
@@ -121,50 +142,158 @@
       @keyframes firework-animation {
         0% {
           opacity: 1;
-          transform: scale(1) translate(-50%, -50%);
+          transform: scale(1) translate(0, 0);
+          box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.8);
+        }
+        50% {
+          opacity: 0.8;
         }
         100% {
           opacity: 0;
-          transform: scale(5) translate(-50%, -50%);
+          transform: scale(3) translate(0, -100px);
+          box-shadow: 0 0 40px 10px rgba(255, 255, 255, 0);
+        }
+      }
+
+      /* Mobile Optimization */
+      @media (max-width: 768px) {
+        h1 {
+          font-size: clamp(1.2rem, 4vw, 2rem);
+          white-space: normal;
+          border-right: none;
+        }
+
+        .balloon {
+          --balloon-size: 30px;
+          width: var(--balloon-size);
+          height: calc(var(--balloon-size) * 1.4);
         }
       }
     </style>
   </head>
   <body>
-    <h1 id="intro">Trust Me, I am an Engineer 🚀</h1>
-    <h2 id="bday">Happy Birthday, Bhabhijaan...! 🎉</h2>
-
-    <audio autoplay loop>
-      <source
-        src="https://www.bensound.com/bensound-music/bensound-happyrock.mp3"
-        type="audio/mpeg"
-      />
-      Your browser does not support the audio element.
-    </audio>
+    <div class="container">
+      <h1 id="intro">Trust Me, I am an Engineer 🚀</h1>
+      <h2 id="bday">Happy Birthday, Bhabhijaan...! 🎉</h2>
+    </div>
 
     <script>
-      // Generate Balloons
-      const colors = ["#FF6F61", "#6B00B6", "#FFD700", "#1E90FF", "#32CD32"];
-      for (let i = 0; i < 20; i++) {
+      // Enhanced Balloon Generation with better space filling
+      const colors = [
+        "#FF6F61",
+        "#6B00B6",
+        "#FFD700",
+        "#1E90FF",
+        "#32CD32",
+        "#FF1493",
+        "#00CED1",
+        "#FFA500",
+      ];
+
+      function createBalloon(x, y) {
         const balloon = document.createElement("div");
         balloon.className = "balloon";
-        balloon.style.backgroundColor =
-          colors[Math.floor(Math.random() * colors.length)];
-        balloon.style.left = Math.random() * 100 + "vw";
-        balloon.style.animationDuration = Math.random() * 3 + 4 + "s";
-        balloon.style.animationDelay = Math.random() * 5 + "s";
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        balloon.style.setProperty("--balloon-color", color);
+
+        // Set position with provided coordinates or random if not provided
+        balloon.style.left = x ? `${x}vw` : `${Math.random() * 90}vw`;
+        balloon.style.bottom = y ? `${y}vh` : `-${Math.random() * 20}vh`;
+
+        // Randomize animation duration and delay
+        const duration = Math.random() * 4 + 5;
+        balloon.style.setProperty("--float-duration", `${duration}s`);
+        balloon.style.animationDelay = `${Math.random() * 5}s`;
+
         document.body.appendChild(balloon);
+
+        // Remove and recreate balloon after animation
+        setTimeout(() => {
+          balloon.remove();
+          createBalloon();
+        }, duration * 1000);
       }
 
-      // Fireworks
+      // Create grid of balloons to fill space
+      function createBalloonGrid() {
+        const cols = 10;
+        const rows = 8;
+
+        for (let i = 0; i < cols; i++) {
+          for (let j = 0; j < rows; j++) {
+            setTimeout(() => {
+              createBalloon(
+                i * (100 / cols) + (Math.random() * 5 - 2.5),
+                j * (100 / rows) + (Math.random() * 5 - 2.5)
+              );
+            }, (i + j) * 200);
+          }
+        }
+      }
+
+      // Initial balloon creation
+      createBalloonGrid();
+
+      // Continuously add random balloons
       setInterval(() => {
+        if (document.querySelectorAll(".balloon").length < 50) {
+          createBalloon();
+        }
+      }, 1000);
+
+      // Enhanced Fireworks
+      function createFirework() {
         const firework = document.createElement("div");
         firework.className = "firework";
-        firework.style.left = Math.random() * 100 + "vw";
-        firework.style.top = Math.random() * 50 + "vh";
+
+        firework.style.left = `${Math.random() * 90}vw`;
+        firework.style.top = `${Math.random() * 60}vh`;
+
+        const hue = Math.random() * 360;
+        firework.style.background = `radial-gradient(circle, 
+          hsl(${hue}, 100%, 70%), 
+          hsl(${hue}, 100%, 60%), 
+          transparent)`;
+
         document.body.appendChild(firework);
         setTimeout(() => firework.remove(), 2000);
-      }, 500);
+      }
+
+      setInterval(createFirework, Math.random() * 500 + 300);
+
+      // Interactive fireworks
+      document.addEventListener("click", (e) => {
+        const firework = document.createElement("div");
+        firework.className = "firework";
+        firework.style.left = `${e.clientX}px`;
+        firework.style.top = `${e.clientY}px`;
+
+        const hue = Math.random() * 360;
+        firework.style.background = `radial-gradient(circle, 
+          hsl(${hue}, 100%, 70%), 
+          hsl(${hue}, 100%, 60%), 
+          transparent)`;
+
+        document.body.appendChild(firework);
+        setTimeout(() => firework.remove(), 2000);
+      });
+
+      // Remove intro text after birthday wish appears
+      setTimeout(() => {
+        const intro = document.getElementById("intro");
+        intro.style.animation = "fadeOut 1s forwards";
+        setTimeout(() => intro.remove(), 1000);
+      }, 7000); // Adjusted timing to match when birthday wish appears
+
+      // Add fadeOut animation
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes fadeOut {
+          from { opacity: 1; }
+          to { opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
     </script>
   </body>
 </html>
