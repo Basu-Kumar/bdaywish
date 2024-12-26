@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #0a2a43, #ff6f61);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: white;
+        position: relative;
+      }
+
+      h1 {
+        position: absolute;
+        top: 10%;
+        z-index: 2;
+        font-size: 2.5rem;
+        opacity: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 3px solid white;
+        animation: typewriter 4s steps(30) forwards,
+          blink 0.7s step-end infinite;
+      }
+
+      h2 {
+        position: absolute;
+        top: 50%;
+        z-index: 2;
+        font-size: 3rem;
+        opacity: 0;
+        animation: fadeIn 3s ease-in 4s forwards;
+        text-align: center;
+      }
+
+      @keyframes typewriter {
+        from {
+          width: 0;
+          opacity: 1;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      @keyframes blink {
+        from {
+          border-color: white;
+        }
+        to {
+          border-color: transparent;
+        }
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      .balloon {
+        width: 50px;
+        height: 70px;
+        background: radial-gradient(
+          circle,
+          white 0%,
+          rgba(255, 255, 255, 0.7) 70%,
+          transparent
+        );
+        position: absolute;
+        border-radius: 50%;
+        animation: float 6s infinite ease-in-out;
+        z-index: 1;
+      }
+
+      .balloon::after {
+        content: "";
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        width: 2px;
+        height: 20px;
+        background: white;
+        transform: translateX(-50%);
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-100px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      .firework {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: radial-gradient(circle, red, yellow, transparent);
+        animation: firework-animation 2s ease-out infinite;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      @keyframes firework-animation {
+        0% {
+          opacity: 1;
+          transform: scale(1) translate(-50%, -50%);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(5) translate(-50%, -50%);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="intro">Trust Me, I am an Engineer 🚀</h1>
+    <h2 id="bday">Happy Birthday, Bhabhijaan...! 🎉</h2>
+
+    <audio autoplay loop>
+      <source
+        src="https://www.bensound.com/bensound-music/bensound-happyrock.mp3"
+        type="audio/mpeg"
+      />
+      Your browser does not support the audio element.
+    </audio>
+
+    <script>
+      // Generate Balloons
+      const colors = ["#FF6F61", "#6B00B6", "#FFD700", "#1E90FF", "#32CD32"];
+      for (let i = 0; i < 20; i++) {
+        const balloon = document.createElement("div");
+        balloon.className = "balloon";
+        balloon.style.backgroundColor =
+          colors[Math.floor(Math.random() * colors.length)];
+        balloon.style.left = Math.random() * 100 + "vw";
+        balloon.style.animationDuration = Math.random() * 3 + 4 + "s";
+        balloon.style.animationDelay = Math.random() * 5 + "s";
+        document.body.appendChild(balloon);
+      }
+
+      // Fireworks
+      setInterval(() => {
+        const firework = document.createElement("div");
+        firework.className = "firework";
+        firework.style.left = Math.random() * 100 + "vw";
+        firework.style.top = Math.random() * 50 + "vh";
+        document.body.appendChild(firework);
+        setTimeout(() => firework.remove(), 2000);
+      }, 500);
+    </script>
+  </body>
+</html>
