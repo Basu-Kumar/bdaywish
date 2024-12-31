@@ -120,9 +120,21 @@
         animation: fall 3s linear forwards;
       }
 
+      .falling-box {
+        position: absolute;
+        width: clamp(10px, 2vw, 20px);
+        height: clamp(10px, 2vw, 20px);
+        opacity: 0.7;
+        animation: boxFall 3s linear forwards;
+        z-index: 0;
+        border-radius: 2px;
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        transform-origin: center;
+      }
+
       .message-container {
         position: fixed;
-        top: 50%;
+        top: 35%;
         left: 50%;
         transform: translate(-50%, -50%);
         text-align: center;
@@ -132,6 +144,7 @@
         width: 90%;
         max-width: 600px;
         padding: var(--spacing);
+        z-index: 1;
       }
 
       .message {
@@ -167,6 +180,20 @@
       @keyframes fall {
         to {
           transform: translateY(100vh) rotate(360deg);
+        }
+      }
+
+      @keyframes boxFall {
+        0% {
+          transform: translateY(-20px) rotate(0deg);
+          opacity: 0.7;
+        }
+        50% {
+          opacity: 0.9;
+        }
+        100% {
+          transform: translateY(100vh) rotate(360deg);
+          opacity: 0;
         }
       }
 
@@ -218,7 +245,6 @@
         }
       }
 
-      /* Touch device optimizations */
       @media (hover: none) {
         .celebrate-btn:hover {
           transform: none;
@@ -226,7 +252,6 @@
         }
       }
 
-      /* High DPI screen optimizations */
       @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
         .title,
         .countdown,
@@ -247,8 +272,6 @@
     <div class="message-container" id="messageContainer"></div>
 
     <script>
-      // Rest of the JavaScript remains the same as it's already working well
-      // Just add the existing JavaScript code here
       let celebrationInterval;
       const backgrounds = [
         "linear-gradient(45deg, #000428, #004e92)",
@@ -275,6 +298,36 @@
       function changeBackground() {
         document.body.style.background = backgrounds[currentBg];
         currentBg = (currentBg + 1) % backgrounds.length;
+      }
+
+      function createBox() {
+        const colors = [
+          "#FF69B4", // Hot Pink
+          "#4169E1", // Royal Blue
+          "#32CD32", // Lime Green
+          "#FFD700", // Gold
+          "#FF4500", // Orange Red
+          "#9370DB", // Medium Purple
+          "#00CED1", // Dark Turquoise
+        ];
+
+        const box = document.createElement("div");
+        box.className = "falling-box";
+
+        // Random starting position across the width of the viewport
+        box.style.left = `${Math.random() * 98}vw`;
+
+        // Random color from our palette
+        box.style.backgroundColor =
+          colors[Math.floor(Math.random() * colors.length)];
+
+        // Random initial rotation
+        box.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+        document.body.appendChild(box);
+
+        // Remove the box after animation completes
+        setTimeout(() => box.remove(), 3000);
       }
 
       function showMessage() {
@@ -328,8 +381,20 @@
             ][Math.floor(Math.random() * 5)];
             document.body.appendChild(confetti);
             setTimeout(() => confetti.remove(), 3000);
+
+            // Add box creation
+            createBox();
           }, i * 50);
         }
+      }
+
+      function startBoxShower() {
+        return setInterval(() => {
+          if (Math.random() > 0.5) {
+            // 50% chance to create a box each interval
+            createBox();
+          }
+        }, 200); // Create a new box every 200ms
       }
 
       function showNewYearMessage() {
@@ -338,6 +403,7 @@
         celebrate();
         if (!celebrationInterval) {
           celebrationInterval = setInterval(celebrate, 2000);
+          startBoxShower();
         }
       }
 
