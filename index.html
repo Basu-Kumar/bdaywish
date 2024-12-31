@@ -2,12 +2,30 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Happy New Year 2025!</title>
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --title-size: clamp(2rem, 5vw, 4rem);
+        --countdown-size: clamp(1.5rem, 4vw, 3rem);
+        --message-size: clamp(1.5rem, 3vw, 2.5rem);
+        --button-size: clamp(1rem, 2vw, 1.2rem);
+        --spacing: clamp(10px, 2vw, 20px);
+      }
+
       body {
         margin: 0;
         min-height: 100vh;
+        min-height: -webkit-fill-available;
         background: linear-gradient(45deg, #000428, #004e92);
         display: flex;
         justify-content: center;
@@ -16,17 +34,25 @@
         overflow: hidden;
         color: white;
         transition: background 2s ease;
+        padding: var(--spacing);
+      }
+
+      html {
+        height: -webkit-fill-available;
       }
 
       .container {
         text-align: center;
         position: relative;
         z-index: 1;
+        width: 100%;
+        max-width: 800px;
+        padding: var(--spacing);
       }
 
       .title {
-        font-size: 4rem;
-        margin: 20px;
+        font-size: var(--title-size);
+        margin: var(--spacing);
         background: linear-gradient(
           90deg,
           #ff0000,
@@ -44,25 +70,30 @@
         background-clip: text;
         color: transparent;
         animation: shine 2s linear infinite;
-        transition: transform 1s ease, font-size 1s ease;
+        transition: transform 1s ease;
+        word-wrap: break-word;
+        line-height: 1.2;
       }
 
       .countdown {
-        font-size: 3rem;
-        margin: 20px;
+        font-size: var(--countdown-size);
+        margin: var(--spacing);
         text-shadow: 0 0 10px #00ff00;
         transition: all 0.5s ease;
+        word-spacing: 0.5em;
       }
 
       .celebrate-btn {
-        padding: 15px 30px;
-        font-size: 1.2rem;
+        padding: clamp(10px, 2vw, 15px) clamp(20px, 4vw, 30px);
+        font-size: var(--button-size);
         background: linear-gradient(45deg, #ff6b6b, #ff9f43);
         border: none;
         border-radius: 25px;
         color: white;
         cursor: pointer;
         transition: all 0.3s;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
       }
 
       .celebrate-btn:hover {
@@ -70,33 +101,23 @@
         box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
       }
 
+      .celebrate-btn:active {
+        transform: scale(0.95);
+      }
+
       .firework {
         position: absolute;
-        width: 4px;
-        height: 4px;
+        width: clamp(2px, 0.5vw, 4px);
+        height: clamp(2px, 0.5vw, 4px);
         border-radius: 50%;
         animation: explode 1s ease-out forwards;
       }
 
       .confetti {
         position: absolute;
-        width: 10px;
-        height: 10px;
+        width: clamp(5px, 1vw, 10px);
+        height: clamp(5px, 1vw, 10px);
         animation: fall 3s linear forwards;
-      }
-
-      .new-year-message {
-        font-size: 5rem;
-        color: #fff;
-        text-shadow: 0 0 20px #ff0000;
-        opacity: 0;
-        transition: all 1s ease-out;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0.5);
-        z-index: 1000;
-        display: none;
       }
 
       .message-container {
@@ -108,14 +129,19 @@
         opacity: 0;
         transition: opacity 1s ease;
         display: none;
+        width: 90%;
+        max-width: 600px;
+        padding: var(--spacing);
       }
 
       .message {
-        font-size: 2.5rem;
-        margin: 20px;
+        font-size: var(--message-size);
+        margin: var(--spacing);
         color: #fff;
         text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
         animation: fadeInOut 4s ease-in-out forwards;
+        word-wrap: break-word;
+        line-height: 1.4;
       }
 
       @keyframes shine {
@@ -133,7 +159,7 @@
           opacity: 1;
         }
         100% {
-          transform: scale(30);
+          transform: scale(clamp(15, 4vw, 30));
           opacity: 0;
         }
       }
@@ -147,7 +173,7 @@
       @keyframes fadeInOut {
         0% {
           opacity: 0;
-          transform: translateY(20px);
+          transform: translateY(clamp(10px, 2vw, 20px));
         }
         20% {
           opacity: 1;
@@ -159,19 +185,55 @@
         }
         100% {
           opacity: 0;
-          transform: translateY(-20px);
+          transform: translateY(clamp(-10px, -2vw, -20px));
         }
       }
 
-      @media (max-width: 768px) {
-        .title {
-          font-size: 2.5rem;
-        }
-        .countdown {
-          font-size: 2rem;
+      @media (max-height: 500px) {
+        .container {
+          transform: scale(0.8);
         }
         .message {
-          font-size: 1.8rem;
+          font-size: calc(var(--message-size) * 0.8);
+        }
+      }
+
+      @media (orientation: landscape) and (max-height: 500px) {
+        .container {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-around;
+          gap: var(--spacing);
+        }
+
+        .title {
+          margin: 0;
+          flex: 1;
+        }
+
+        .countdown {
+          margin: 0;
+          flex: 1;
+        }
+      }
+
+      /* Touch device optimizations */
+      @media (hover: none) {
+        .celebrate-btn:hover {
+          transform: none;
+          box-shadow: none;
+        }
+      }
+
+      /* High DPI screen optimizations */
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        .title,
+        .countdown,
+        .message {
+          text-rendering: optimizeLegibility;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
         }
       }
     </style>
@@ -185,6 +247,8 @@
     <div class="message-container" id="messageContainer"></div>
 
     <script>
+      // Rest of the JavaScript remains the same as it's already working well
+      // Just add the existing JavaScript code here
       let celebrationInterval;
       const backgrounds = [
         "linear-gradient(45deg, #000428, #004e92)",
