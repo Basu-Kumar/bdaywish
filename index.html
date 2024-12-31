@@ -15,6 +15,7 @@
         font-family: Arial, sans-serif;
         overflow: hidden;
         color: white;
+        transition: background 2s ease;
       }
 
       .container {
@@ -43,12 +44,14 @@
         background-clip: text;
         color: transparent;
         animation: shine 2s linear infinite;
+        transition: transform 1s ease, font-size 1s ease;
       }
 
       .countdown {
         font-size: 3rem;
         margin: 20px;
         text-shadow: 0 0 10px #00ff00;
+        transition: all 0.5s ease;
       }
 
       .celebrate-btn {
@@ -59,18 +62,20 @@
         border-radius: 25px;
         color: white;
         cursor: pointer;
-        transition: transform 0.3s;
+        transition: all 0.3s;
       }
 
       .celebrate-btn:hover {
         transform: scale(1.1);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
       }
 
-      .star {
+      .firework {
         position: absolute;
-        background: white;
+        width: 4px;
+        height: 4px;
         border-radius: 50%;
-        animation: twinkle var(--duration) infinite;
+        animation: explode 1s ease-out forwards;
       }
 
       .confetti {
@@ -85,12 +90,11 @@
         color: #fff;
         text-shadow: 0 0 20px #ff0000;
         opacity: 0;
-        transform: scale(0.5);
         transition: all 1s ease-out;
         position: fixed;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%) scale(0.5);
         z-index: 1000;
         display: none;
       }
@@ -110,13 +114,14 @@
         }
       }
 
-      @keyframes twinkle {
-        0%,
-        100% {
-          opacity: 0;
-        }
-        50% {
+      @keyframes explode {
+        0% {
+          transform: scale(1);
           opacity: 1;
+        }
+        100% {
+          transform: scale(30);
+          opacity: 0;
         }
       }
 
@@ -144,50 +149,58 @@
       <h1 class="title">Happy New Year 2025!</h1>
       <div class="countdown" id="countdown"></div>
       <button class="celebrate-btn" onclick="celebrate()">Celebrate! 🎉</button>
-      <audio id="celebrationSound">
-        <source
-          src="data:audio/mpeg;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAAFAAAGUACFhYWFhYWFhYWFhYWFhYWFhYWFvb29vb29vb29vb29vb29vb29vb3t7e3t7e3t7e3t7e3t7e3t7e3t7f////////////////////////////////8AAAA5TEFNRTMuOTlyBK8AAAAALAAAADUgJAJgTQAARgkABP8mP/6iAAAAAAAAAAAAAAAAAAAA//sQxAADgywBGiAAACDQgCNEAAAAIRE6sWIxYrAaD4+XB8fHg+XhU+4P4JEm8GAwF3/B8ucHxUnygIAgD/lwfL4Ph/KAgBF5QBwIQf//E4PBgQBAEAQBAHwQBAEAQAgCA"
-          type="audio/mpeg"
-        />
-      </audio>
     </div>
     <div id="newYearMessage" class="new-year-message">Welcome 2025! 🎉</div>
 
     <script>
       let celebrationInterval;
+      const backgrounds = [
+        "linear-gradient(45deg, #000428, #004e92)",
+        "linear-gradient(45deg, #200122, #6f0000)",
+        "linear-gradient(45deg, #1a2a6c, #b21f1f)",
+        "linear-gradient(45deg, #141e30, #243b55)",
+        "linear-gradient(45deg, #000000, #434343)",
+      ];
+      let currentBg = 0;
 
-      function createStars() {
-        const count = 100;
-        for (let i = 0; i < count; i++) {
-          const star = document.createElement("div");
-          star.className = "star";
-          star.style.width = Math.random() * 3 + "px";
-          star.style.height = star.style.width;
-          star.style.left = Math.random() * 100 + "vw";
-          star.style.top = Math.random() * 100 + "vh";
-          star.style.setProperty("--duration", Math.random() * 3 + 2 + "s");
-          document.body.appendChild(star);
-        }
+      function changeBackground() {
+        document.body.style.background = backgrounds[currentBg];
+        currentBg = (currentBg + 1) % backgrounds.length;
       }
 
-      function createConfetti() {
+      function createFirework(x, y) {
         const colors = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff"];
-        const confetti = document.createElement("div");
-        confetti.className = "confetti";
-        confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.backgroundColor =
+        const firework = document.createElement("div");
+        firework.className = "firework";
+        firework.style.left = x + "px";
+        firework.style.top = y + "px";
+        firework.style.backgroundColor =
           colors[Math.floor(Math.random() * colors.length)];
-        document.body.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 3000);
+        document.body.appendChild(firework);
+        setTimeout(() => firework.remove(), 1000);
       }
 
       function celebrate() {
         for (let i = 0; i < 50; i++) {
-          setTimeout(createConfetti, i * 50);
+          setTimeout(() => {
+            createFirework(
+              Math.random() * window.innerWidth,
+              Math.random() * window.innerHeight
+            );
+            const confetti = document.createElement("div");
+            confetti.className = "confetti";
+            confetti.style.left = Math.random() * 100 + "vw";
+            confetti.style.backgroundColor = [
+              "#ff0000",
+              "#00ff00",
+              "#0000ff",
+              "#ffff00",
+              "#ff00ff",
+            ][Math.floor(Math.random() * 5)];
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 3000);
+          }, i * 50);
         }
-        const sound = document.getElementById("celebrationSound");
-        sound.currentTime = 0;
-        sound.play();
       }
 
       function showNewYearMessage() {
@@ -218,14 +231,20 @@
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-        document.getElementById(
-          "countdown"
-        ).innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        const countdown = document.getElementById("countdown");
+        countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+        // Change text color based on remaining time
+        const hue = Math.floor((diff / (1000 * 60 * 60 * 24 * 365)) * 360);
+        countdown.style.color = `hsl(${hue}, 100%, 50%)`;
+        countdown.style.transform = `scale(${
+          1 + Math.sin(Date.now() / 1000) * 0.05
+        })`;
       }
 
       // Initialize
-      createStars();
       setInterval(updateCountdown, 1000);
+      setInterval(changeBackground, 5000);
       updateCountdown();
     </script>
   </body>
