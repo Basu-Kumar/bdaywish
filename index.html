@@ -99,10 +99,23 @@
         display: none;
       }
 
-      .new-year-message.show {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-        display: block;
+      .message-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        opacity: 0;
+        transition: opacity 1s ease;
+        display: none;
+      }
+
+      .message {
+        font-size: 2.5rem;
+        margin: 20px;
+        color: #fff;
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        animation: fadeInOut 4s ease-in-out forwards;
       }
 
       @keyframes shine {
@@ -131,6 +144,25 @@
         }
       }
 
+      @keyframes fadeInOut {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        20% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        80% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+      }
+
       @media (max-width: 768px) {
         .title {
           font-size: 2.5rem;
@@ -138,8 +170,8 @@
         .countdown {
           font-size: 2rem;
         }
-        .new-year-message {
-          font-size: 3rem;
+        .message {
+          font-size: 1.8rem;
         }
       }
     </style>
@@ -150,7 +182,7 @@
       <div class="countdown" id="countdown"></div>
       <button class="celebrate-btn" onclick="celebrate()">Celebrate! 🎉</button>
     </div>
-    <div id="newYearMessage" class="new-year-message">Welcome 2025! 🎉</div>
+    <div class="message-container" id="messageContainer"></div>
 
     <script>
       let celebrationInterval;
@@ -161,11 +193,44 @@
         "linear-gradient(45deg, #141e30, #243b55)",
         "linear-gradient(45deg, #000000, #434343)",
       ];
+
+      const messages = [
+        "🎉 Welcome to 2025! Let's make it extraordinary! 🌟",
+        "✨ May your dreams take flight in this new chapter! 🚀",
+        "🌈 Here's to 365 days of endless possibilities! 💫",
+        "❤️ Wishing you love, laughter, and success! 🍀",
+        "🌟 New year, new adventures, new memories! 🎊",
+        "🎯 May all your goals turn into achievements! 💪",
+        "🌺 Let your happiness bloom in 2025! 🌸",
+        "💫 Time to write your own success story! 📖",
+      ];
+
       let currentBg = 0;
+      let messageIndex = 0;
 
       function changeBackground() {
         document.body.style.background = backgrounds[currentBg];
         currentBg = (currentBg + 1) % backgrounds.length;
+      }
+
+      function showMessage() {
+        const container = document.getElementById("messageContainer");
+        container.style.display = "block";
+        container.style.opacity = "1";
+
+        const message = document.createElement("div");
+        message.className = "message";
+        message.textContent = messages[messageIndex];
+        container.appendChild(message);
+
+        messageIndex = (messageIndex + 1) % messages.length;
+
+        setTimeout(() => {
+          message.remove();
+          if (container.children.length === 0) {
+            showMessage();
+          }
+        }, 4000);
       }
 
       function createFirework(x, y) {
@@ -205,9 +270,7 @@
 
       function showNewYearMessage() {
         document.querySelector(".container").style.display = "none";
-        const newYearMsg = document.getElementById("newYearMessage");
-        newYearMsg.style.display = "block";
-        newYearMsg.classList.add("show");
+        showMessage();
         celebrate();
         if (!celebrationInterval) {
           celebrationInterval = setInterval(celebrate, 2000);
@@ -234,7 +297,6 @@
         const countdown = document.getElementById("countdown");
         countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
-        // Change text color based on remaining time
         const hue = Math.floor((diff / (1000 * 60 * 60 * 24 * 365)) * 360);
         countdown.style.color = `hsl(${hue}, 100%, 50%)`;
         countdown.style.transform = `scale(${
@@ -242,9 +304,8 @@
         })`;
       }
 
-      // Initialize
       setInterval(updateCountdown, 1000);
-      setInterval(changeBackground, 5000);
+      setInterval(changeBackground, 1000);
       updateCountdown();
     </script>
   </body>
