@@ -16,7 +16,6 @@
 
       :root {
         --title-size: clamp(2rem, 5vw, 4rem);
-        --countdown-size: clamp(1.5rem, 4vw, 3rem);
         --message-size: clamp(1.5rem, 3vw, 2.5rem);
         --button-size: clamp(1rem, 2vw, 1.2rem);
         --spacing: clamp(10px, 2vw, 20px);
@@ -75,14 +74,6 @@
         line-height: 1.2;
       }
 
-      .countdown {
-        font-size: var(--countdown-size);
-        margin: var(--spacing);
-        text-shadow: 0 0 10px #00ff00;
-        transition: all 0.5s ease;
-        word-spacing: 0.5em;
-      }
-
       .celebrate-btn {
         padding: clamp(10px, 2vw, 15px) clamp(20px, 4vw, 30px);
         font-size: var(--button-size);
@@ -117,6 +108,7 @@
         position: absolute;
         width: clamp(5px, 1vw, 10px);
         height: clamp(5px, 1vw, 10px);
+        top: -20px;
         animation: fall 3s linear forwards;
       }
 
@@ -130,6 +122,7 @@
         border-radius: 2px;
         box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
         transform-origin: center;
+        top: -20px;
       }
 
       .message-container {
@@ -185,7 +178,7 @@
 
       @keyframes boxFall {
         0% {
-          transform: translateY(-20px) rotate(0deg);
+          transform: translateY(0) rotate(0deg);
           opacity: 0.7;
         }
         50% {
@@ -238,11 +231,6 @@
           margin: 0;
           flex: 1;
         }
-
-        .countdown {
-          margin: 0;
-          flex: 1;
-        }
       }
 
       @media (hover: none) {
@@ -254,7 +242,6 @@
 
       @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
         .title,
-        .countdown,
         .message {
           text-rendering: optimizeLegibility;
           -webkit-font-smoothing: antialiased;
@@ -266,8 +253,7 @@
   <body>
     <div class="container">
       <h1 class="title">Happy New Year 2025!</h1>
-      <div class="countdown" id="countdown"></div>
-      <button class="celebrate-btn" onclick="celebrate()">Celebrate! 🎉</button>
+      <button class="celebrate-btn" onclick="celebrate()">Click here 🎉</button>
     </div>
     <div class="message-container" id="messageContainer"></div>
 
@@ -314,19 +300,12 @@
         const box = document.createElement("div");
         box.className = "falling-box";
 
-        // Random starting position across the width of the viewport
         box.style.left = `${Math.random() * 98}vw`;
-
-        // Random color from our palette
         box.style.backgroundColor =
           colors[Math.floor(Math.random() * colors.length)];
-
-        // Random initial rotation
         box.style.transform = `rotate(${Math.random() * 360}deg)`;
 
         document.body.appendChild(box);
-
-        // Remove the box after animation completes
         setTimeout(() => box.remove(), 3000);
       }
 
@@ -363,6 +342,9 @@
       }
 
       function celebrate() {
+        document.querySelector(".container").style.display = "none";
+        showMessage();
+
         for (let i = 0; i < 50; i++) {
           setTimeout(() => {
             createFirework(
@@ -382,61 +364,32 @@
             document.body.appendChild(confetti);
             setTimeout(() => confetti.remove(), 3000);
 
-            // Add box creation
             createBox();
           }, i * 50);
         }
-      }
 
-      function startBoxShower() {
-        return setInterval(() => {
-          if (Math.random() > 0.5) {
-            // 50% chance to create a box each interval
-            createBox();
-          }
-        }, 200); // Create a new box every 200ms
-      }
-
-      function showNewYearMessage() {
-        document.querySelector(".container").style.display = "none";
-        showMessage();
-        celebrate();
         if (!celebrationInterval) {
-          celebrationInterval = setInterval(celebrate, 2000);
-          startBoxShower();
+          celebrationInterval = setInterval(() => {
+            for (let i = 0; i < 50; i++) {
+              setTimeout(() => {
+                createFirework(
+                  Math.random() * window.innerWidth,
+                  Math.random() * window.innerHeight
+                );
+                createBox();
+              }, i * 50);
+            }
+          }, 2000);
+
+          setInterval(() => {
+            if (Math.random() > 0.5) {
+              createBox();
+            }
+          }, 200);
         }
       }
 
-      function updateCountdown() {
-        const now = new Date();
-        const newYear = new Date("January 1, 2025 00:00:00");
-        const diff = newYear - now;
-
-        if (diff <= 0) {
-          showNewYearMessage();
-          return;
-        }
-
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        const countdown = document.getElementById("countdown");
-        countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-        const hue = Math.floor((diff / (1000 * 60 * 60 * 24 * 365)) * 360);
-        countdown.style.color = `hsl(${hue}, 100%, 50%)`;
-        countdown.style.transform = `scale(${
-          1 + Math.sin(Date.now() / 1000) * 0.05
-        })`;
-      }
-
-      setInterval(updateCountdown, 1000);
       setInterval(changeBackground, 1700);
-      updateCountdown();
     </script>
   </body>
 </html>
