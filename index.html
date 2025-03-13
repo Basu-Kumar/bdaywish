@@ -1,462 +1,516 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Happy Holi 2025!</title>
     <style>
-        /* Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+      /* Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
 
-        body {
-            overflow-x: hidden;
-            transition: background 1.5s ease;
-            background: linear-gradient(135deg, #FF0099, #FF9900);
-            min-height: 100vh;
-        }
+      body {
+        overflow-x: hidden;
+        transition: background 1.5s ease;
+        background: linear-gradient(135deg, #ff0099, #ff9900);
+        min-height: 100vh;
+      }
 
-        /* Container Styles */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+      /* Container Styles */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        text-align: center;
+        position: relative;
+        z-index: 10;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
 
-        /* Header Styles */
-        header {
-            padding: 10px 0;
-        }
+      /* Header Styles */
+      header {
+        padding: 10px 0;
+      }
 
-        .logo {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: white;
-            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
-            animation: colorChange 5s infinite alternate;
-        }
+      .logo {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+        animation: colorChange 5s infinite alternate;
+      }
 
-        /* Hero Section */
-        .hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px 0;
-            position: relative;
-        }
+      /* Hero Section */
+      .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 0;
+        position: relative;
+      }
 
+      .hero h1 {
+        font-size: 4.5rem;
+        color: white;
+        margin-bottom: 20px;
+        text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+        animation: scaleText 2s infinite alternate;
+      }
+
+      .hero p {
+        font-size: 1.5rem;
+        color: white;
+        max-width: 800px;
+        line-height: 1.6;
+        text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Flowing Messages Section */
+      .message-container {
+        position: relative;
+        flex: 1;
+        overflow: hidden;
+        margin-top: 20px;
+      }
+
+      .message {
+        position: absolute;
+        width: 100%;
+        padding: 15px 20px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        color: white;
+        font-size: 1.6rem;
+        text-align: center;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transition: all 0.75s ease-out;
+        min-height: 100px; /* Increased minimum height */
+        max-height: 140px; /* Maximum height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px; /* Space between messages */
+        overflow: hidden; /* Prevent text overflow */
+        line-height: 1.3; /* Tighter line height for long messages */
+      }
+
+      /* Message animations */
+      @keyframes fadeInLeft {
+        from {
+          opacity: 0;
+          transform: translate3d(-100%, 0, 0);
+        }
+        to {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+      }
+
+      @keyframes fadeInRight {
+        from {
+          opacity: 0;
+          transform: translate3d(100%, 0, 0);
+        }
+        to {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+      }
+
+      @keyframes zoomIn {
+        from {
+          opacity: 0;
+          transform: scale3d(0.3, 0.3, 0.3);
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes bounceIn {
+        from,
+        20%,
+        40%,
+        60%,
+        80%,
+        to {
+          animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        0% {
+          opacity: 0;
+          transform: scale3d(0.3, 0.3, 0.3);
+        }
+        20% {
+          transform: scale3d(1.1, 1.1, 1.1);
+        }
+        40% {
+          transform: scale3d(0.9, 0.9, 0.9);
+        }
+        60% {
+          opacity: 1;
+          transform: scale3d(1.03, 1.03, 1.03);
+        }
+        80% {
+          transform: scale3d(0.97, 0.97, 0.97);
+        }
+        to {
+          opacity: 1;
+          transform: scale3d(1, 1, 1);
+        }
+      }
+
+      @keyframes flipInX {
+        from {
+          transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+          animation-timing-function: ease-in;
+          opacity: 0;
+        }
+        40% {
+          transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+          animation-timing-function: ease-in;
+        }
+        60% {
+          transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+          opacity: 1;
+        }
+        80% {
+          transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+        }
+        to {
+          transform: perspective(400px);
+          opacity: 1;
+        }
+      }
+
+      /* Footer */
+      footer {
+        padding: 15px 0;
+        text-align: center;
+        color: white;
+        font-size: 1.1rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        background: rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
+      }
+
+      /* Floating colored powders */
+      .powder {
+        position: absolute;
+        pointer-events: none;
+        opacity: 0;
+        animation: float-powder 10s infinite linear;
+        z-index: 5;
+      }
+
+      @keyframes float-powder {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.8;
+        }
+        90% {
+          opacity: 0.2;
+        }
+        100% {
+          transform: translateY(-800px) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      /* Animations */
+      @keyframes colorChange {
+        0% {
+          color: #ff00ff;
+        }
+        25% {
+          color: #ff9900;
+        }
+        50% {
+          color: #ff3333;
+        }
+        75% {
+          color: #33ccff;
+        }
+        100% {
+          color: #00ff66;
+        }
+      }
+
+      @keyframes scaleText {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(1.05);
+        }
+      }
+
+      /* Message wrapper for text handling */
+      .message-text {
+        width: 100%;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* Limit to 3 lines */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* Media Queries */
+      @media (max-width: 768px) {
         .hero h1 {
-            font-size: 4.5rem;
-            color: white;
-            margin-bottom: 20px;
-            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
-            animation: scaleText 2s infinite alternate;
+          font-size: 3rem;
         }
-
         .hero p {
-            font-size: 1.5rem;
-            color: white;
-            max-width: 800px;
-            line-height: 1.6;
-            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+          font-size: 1.2rem;
         }
-
-        /* Flowing Messages Section */
-        .message-container {
-            position: relative;
-            flex: 1;
-            overflow: hidden;
-            margin-top: 20px;
-        }
-
         .message {
-            position: absolute;
-            width: 100%;
-            padding: 15px 20px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            color: white;
-            font-size: 1.6rem;
-            text-align: center;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            opacity: 0;
-            transition: all 0.75s ease-out;
-            min-height: 100px; /* Increased minimum height */
-            max-height: 140px; /* Maximum height */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px; /* Space between messages */
-            overflow: hidden; /* Prevent text overflow */
-            line-height: 1.3; /* Tighter line height for long messages */
+          font-size: 1.3rem;
+          min-height: 90px;
+          max-height: 120px;
         }
+      }
 
-        /* Message animations */
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translate3d(-100%, 0, 0);
-            }
-            to {
-                opacity: 1;
-                transform: translate3d(0, 0, 0);
-            }
+      @media (max-width: 480px) {
+        .hero h1 {
+          font-size: 2.5rem;
         }
-
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translate3d(100%, 0, 0);
-            }
-            to {
-                opacity: 1;
-                transform: translate3d(0, 0, 0);
-            }
+        .hero p {
+          font-size: 1rem;
         }
-
-        @keyframes zoomIn {
-            from {
-                opacity: 0;
-                transform: scale3d(0.3, 0.3, 0.3);
-            }
-            50% {
-                opacity: 1;
-            }
+        .message {
+          font-size: 1.1rem;
+          min-height: 80px;
+          max-height: 110px;
+          padding: 12px 15px;
         }
-
-        @keyframes bounceIn {
-            from, 20%, 40%, 60%, 80%, to {
-                animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-            }
-            0% {
-                opacity: 0;
-                transform: scale3d(0.3, 0.3, 0.3);
-            }
-            20% {
-                transform: scale3d(1.1, 1.1, 1.1);
-            }
-            40% {
-                transform: scale3d(0.9, 0.9, 0.9);
-            }
-            60% {
-                opacity: 1;
-                transform: scale3d(1.03, 1.03, 1.03);
-            }
-            80% {
-                transform: scale3d(0.97, 0.97, 0.97);
-            }
-            to {
-                opacity: 1;
-                transform: scale3d(1, 1, 1);
-            }
+        .logo {
+          font-size: 2rem;
         }
-
-        @keyframes flipInX {
-            from {
-                transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
-                animation-timing-function: ease-in;
-                opacity: 0;
-            }
-            40% {
-                transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
-                animation-timing-function: ease-in;
-            }
-            60% {
-                transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
-                opacity: 1;
-            }
-            80% {
-                transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
-            }
-            to {
-                transform: perspective(400px);
-                opacity: 1;
-            }
-        }
-
-        /* Footer */
-        footer {
-            padding: 15px 0;
-            text-align: center;
-            color: white;
-            font-size: 1.1rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-            background: rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(5px);
-        }
-
-        /* Floating colored powders */
-        .powder {
-            position: absolute;
-            pointer-events: none;
-            opacity: 0;
-            animation: float-powder 10s infinite linear;
-            z-index: 5;
-        }
-
-        @keyframes float-powder {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.8;
-            }
-            90% {
-                opacity: 0.2;
-            }
-            100% {
-                transform: translateY(-800px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        /* Animations */
-        @keyframes colorChange {
-            0% { color: #FF00FF; }
-            25% { color: #FF9900; }
-            50% { color: #FF3333; }
-            75% { color: #33CCFF; }
-            100% { color: #00FF66; }
-        }
-
-        @keyframes scaleText {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.05); }
-        }
-
-        /* Message wrapper for text handling */
-        .message-text {
-            width: 100%;
-            display: -webkit-box;
-            -webkit-line-clamp: 3; /* Limit to 3 lines */
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* Media Queries */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 3rem;
-            }
-            .hero p {
-                font-size: 1.2rem;
-            }
-            .message {
-                font-size: 1.3rem;
-                min-height: 90px;
-                max-height: 120px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            .hero p {
-                font-size: 1rem;
-            }
-            .message {
-                font-size: 1.1rem;
-                min-height: 80px;
-                max-height: 110px;
-                padding: 12px 15px;
-            }
-            .logo {
-                font-size: 2rem;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <div class="logo">Holi 2025</div>
-        </header>
+      <header>
+        <div class="logo">Holi 2025</div>
+      </header>
 
-        <section class="hero">
-            <h1>Happy Holi!</h1>
-            <p>Celebrate the festival of colors with joy, happiness, and love. May your life be as colorful as the hues of Holi!</p>
-        </section>
+      <section class="hero">
+        <h1>Happy Holi!</h1>
+        <p>
+          Celebrate the festival of colors with joy, happiness, and love. May
+          your life be as colorful as the hues of Holi!
+        </p>
+      </section>
 
-        <div class="message-container" id="messageContainer">
-            <!-- Messages will be dynamically added here -->
-        </div>
+      <div class="message-container" id="messageContainer">
+        <!-- Messages will be dynamically added here -->
+      </div>
 
-        <footer>
-            <p>Wishing you and your loved ones a vibrant and joyous Holi celebration! 🎨✨</p>
-        </footer>
+      <footer>
+        <p>
+          Wishing you and your loved ones a vibrant and joyous Holi celebration!
+          🎨✨
+        </p>
+      </footer>
     </div>
 
     <script>
-        // Background color changing functionality with more vibrant colors
-        const backgroundColors = [
-            'linear-gradient(135deg, #FF0099, #FF9900)',
-            'linear-gradient(135deg, #9933FF, #00FFCC)',
-            'linear-gradient(135deg, #FF3333, #FFCC00)',
-            'linear-gradient(135deg, #00CCFF, #00FF66)',
-            'linear-gradient(135deg, #FF00CC, #FF6600)',
-            'linear-gradient(135deg, #FFCC00, #FF0066)',
-            'linear-gradient(135deg, #33CCFF, #9933FF)'
+      // Background color changing functionality with more vibrant colors
+      const backgroundColors = [
+        "linear-gradient(135deg, #FF0099, #FF9900)",
+        "linear-gradient(135deg, #9933FF, #00FFCC)",
+        "linear-gradient(135deg, #FF3333, #FFCC00)",
+        "linear-gradient(135deg, #00CCFF, #00FF66)",
+        "linear-gradient(135deg, #FF00CC, #FF6600)",
+        "linear-gradient(135deg, #FFCC00, #FF0066)",
+        "linear-gradient(135deg, #33CCFF, #9933FF)",
+      ];
+
+      let backgroundIndex = 0;
+
+      function changeBackground() {
+        backgroundIndex = (backgroundIndex + 1) % backgroundColors.length;
+        document.body.style.background = backgroundColors[backgroundIndex];
+      }
+
+      // Set interval to change background every 3 seconds
+      setInterval(changeBackground, 3000);
+
+      // Flowing message functionality
+      const messageContainer = document.getElementById("messageContainer");
+      const messageTexts = [
+        "May your life be as colorful as the festivities of Holi!",
+        "Let the colors of Holi spread happiness and peace in your life.",
+        "Wishing you a Holi filled with sweet moments and colorful memories.",
+        "May God gift you all the colors of life, colors of joy, colors of happiness, colors of friendship.",
+        "Brighten up your life with the vibrant colors of Holi.",
+        "Let's celebrate the victory of good over evil on this auspicious day!",
+        "May this Holi bring the brightest colors to your life.",
+        "Wishing you a rainbow of joyful moments this Holi!",
+        "Fill your life with colors of love, friendship, and happiness.",
+        "Holi reminds us to spread love, not hate. Happy Holi!",
+        "Embrace the colors of Holi and let go of all your worries.",
+        "May the spirit of Holi bring you joy and prosperity.",
+        "Life is a canvas - paint it with the colors of Holi and make it a masterpiece!",
+        "As the colors of Holi fill the air, may your heart be filled with love and laughter.",
+        "May the festival of colors paint your life with the hues of happiness and success.",
+        "Let's celebrate the divine connection of hearts with the colors of Holi.",
+        "May the splash of Holi colors bring the rainbow of happiness in your life.",
+        "Sending you wishes drenched in colors of joy and wrapped in the warmth of love.",
+        "May your Holi be as vibrant as your dreams and as colorful as your imagination.",
+        "On this festival of love, may the melody of happiness never leave your life.",
+        "Dance in the rhythm of colors and let the music of joy fill your soul this Holi.",
+        "May the shower of colors wash away all your sorrows and bring eternal happiness.",
+        "Colors speak louder than words - may your Holi be full of expressions of love.",
+        "The beauty of Holi lies not in colors, but in the hearts that celebrate together.",
+        "As you immerse in colors today, may your life be immersed in endless joy forever.",
+        "Throw away your inhibitions with the colors of Holi and embrace life fully.",
+        "The colors of Holi aren't just on your face, they're reflections of your vibrant soul.",
+        "May each color of Holi bring a different shade of happiness in your life.",
+        "Let's color not just our faces, but also color our relationships with love.",
+        "The most beautiful Holi colors are the ones that paint smiles on people's faces.",
+      ];
+
+      // Animation types for messages
+      const animationTypes = [
+        "fadeInLeft",
+        "fadeInRight",
+        "zoomIn",
+        "bounceIn",
+        "flipInX",
+      ];
+
+      let activeMessages = [];
+      const maxActiveMessages = 4; // Reduced maximum messages for better spacing
+      const messageSpacing = 155; // Increased spacing between messages in pixels
+
+      function createMessage() {
+        // Remove oldest message if we've reached max
+        if (activeMessages.length >= maxActiveMessages) {
+          const oldestMessage = activeMessages.shift();
+          oldestMessage.style.opacity = "0";
+
+          // Remove from DOM after transition
+          setTimeout(() => {
+            oldestMessage.remove();
+          }, 750);
+        }
+
+        // Create new message
+        const message = document.createElement("div");
+        message.classList.add("message");
+
+        // Create wrapper for text to handle overflow properly
+        const messageTextWrapper = document.createElement("div");
+        messageTextWrapper.classList.add("message-text");
+
+        // Random message text
+        const randomText =
+          messageTexts[Math.floor(Math.random() * messageTexts.length)];
+        messageTextWrapper.textContent = randomText;
+
+        // Add text wrapper to message container
+        message.appendChild(messageTextWrapper);
+
+        // Random animation
+        const randomAnimation =
+          animationTypes[Math.floor(Math.random() * animationTypes.length)];
+        message.style.animation = `${randomAnimation} 0.75s forwards`;
+
+        // Random color to add variety
+        const hue = Math.floor(Math.random() * 360);
+        message.style.borderLeft = `5px solid hsl(${hue}, 100%, 50%)`;
+
+        // Append to container
+        messageContainer.appendChild(message);
+
+        // Add to active messages
+        activeMessages.push(message);
+
+        // Position all messages
+        positionMessages();
+      }
+
+      function positionMessages() {
+        const containerHeight = messageContainer.clientHeight;
+
+        // Update position of all active messages with a smooth transition
+        activeMessages.forEach((msg, index) => {
+          // Calculate position from bottom of container
+          // Start with bottom position and move up for each message
+          const bottomPosition = 10 + index * messageSpacing;
+
+          // Set position with smooth transition
+          msg.style.bottom = `${bottomPosition}px`;
+          msg.style.opacity = "1";
+        });
+      }
+
+      // Create floating powder effects across the page
+      function createFloatingPowder() {
+        const powderCount = window.innerWidth < 768 ? 20 : 40;
+        const particleColors = [
+          "#FF00FF",
+          "#FF9900",
+          "#33CCFF",
+          "#00FF66",
+          "#FF3333",
+          "#FFCC00",
+          "#9933FF",
         ];
 
-        let backgroundIndex = 0;
+        for (let i = 0; i < powderCount; i++) {
+          const powder = document.createElement("div");
+          powder.classList.add("powder");
 
-        function changeBackground() {
-            backgroundIndex = (backgroundIndex + 1) % backgroundColors.length;
-            document.body.style.background = backgroundColors[backgroundIndex];
+          // Set properties
+          const size = Math.random() * 15 + 5;
+          const color =
+            particleColors[Math.floor(Math.random() * particleColors.length)];
+
+          powder.style.width = `${size}px`;
+          powder.style.height = `${size}px`;
+          powder.style.backgroundColor = color;
+          powder.style.borderRadius = "50%";
+          powder.style.left = `${Math.random() * 100}%`;
+          powder.style.bottom = "-50px";
+
+          // Randomize animation duration and delay
+          powder.style.animationDuration = `${Math.random() * 10 + 10}s`;
+          powder.style.animationDelay = `${Math.random() * 5}s`;
+
+          document.body.appendChild(powder);
         }
+      }
 
-        // Set interval to change background every 3 seconds
-        setInterval(changeBackground, 3000);
+      // Handle window resize
+      window.addEventListener("resize", positionMessages);
 
-        // Flowing message functionality
-        const messageContainer = document.getElementById('messageContainer');
-        const messageTexts = [
-            "May your life be as colorful as the festivities of Holi!",
-            "Let the colors of Holi spread happiness and peace in your life.",
-            "Wishing you a Holi filled with sweet moments and colorful memories.",
-            "May God gift you all the colors of life, colors of joy, colors of happiness, colors of friendship.",
-            "Brighten up your life with the vibrant colors of Holi.",
-            "Let's celebrate the victory of good over evil on this auspicious day!",
-            "May this Holi bring the brightest colors to your life.",
-            "Wishing you a rainbow of joyful moments this Holi!",
-            "Fill your life with colors of love, friendship, and happiness.",
-            "Holi reminds us to spread love, not hate. Happy Holi!",
-            "Embrace the colors of Holi and let go of all your worries.",
-            "May the spirit of Holi bring you joy and prosperity."
-        ];
+      // Initialize
+      function init() {
+        createFloatingPowder();
+        createMessage(); // Create first message immediately
 
-        // Animation types for messages
-        const animationTypes = [
-            'fadeInLeft',
-            'fadeInRight',
-            'zoomIn',
-            'bounceIn',
-            'flipInX'
-        ];
+        // Create a new message every 3 seconds
+        setInterval(createMessage, 2000);
+      }
 
-        let activeMessages = [];
-        const maxActiveMessages = 4; // Reduced maximum messages for better spacing
-        const messageSpacing = 155; // Increased spacing between messages in pixels
-
-        function createMessage() {
-            // Remove oldest message if we've reached max
-            if (activeMessages.length >= maxActiveMessages) {
-                const oldestMessage = activeMessages.shift();
-                oldestMessage.style.opacity = "0";
-                
-                // Remove from DOM after transition
-                setTimeout(() => {
-                    oldestMessage.remove();
-                }, 750);
-            }
-            
-            // Create new message
-            const message = document.createElement('div');
-            message.classList.add('message');
-            
-            // Create wrapper for text to handle overflow properly
-            const messageTextWrapper = document.createElement('div');
-            messageTextWrapper.classList.add('message-text');
-            
-            // Random message text
-            const randomText = messageTexts[Math.floor(Math.random() * messageTexts.length)];
-            messageTextWrapper.textContent = randomText;
-            
-            // Add text wrapper to message container
-            message.appendChild(messageTextWrapper);
-            
-            // Random animation
-            const randomAnimation = animationTypes[Math.floor(Math.random() * animationTypes.length)];
-            message.style.animation = `${randomAnimation} 0.75s forwards`;
-            
-            // Random color to add variety
-            const hue = Math.floor(Math.random() * 360);
-            message.style.borderLeft = `5px solid hsl(${hue}, 100%, 50%)`;
-            
-            // Append to container
-            messageContainer.appendChild(message);
-            
-            // Add to active messages
-            activeMessages.push(message);
-            
-            // Position all messages
-            positionMessages();
-        }
-
-        function positionMessages() {
-            const containerHeight = messageContainer.clientHeight;
-            
-            // Update position of all active messages with a smooth transition
-            activeMessages.forEach((msg, index) => {
-                // Calculate position from bottom of container
-                // Start with bottom position and move up for each message
-                const bottomPosition = 10 + (index * messageSpacing);
-                
-                // Set position with smooth transition
-                msg.style.bottom = `${bottomPosition}px`;
-                msg.style.opacity = "1";
-            });
-        }
-
-        // Create floating powder effects across the page
-        function createFloatingPowder() {
-            const powderCount = window.innerWidth < 768 ? 20 : 40;
-            const particleColors = ['#FF00FF', '#FF9900', '#33CCFF', '#00FF66', '#FF3333', '#FFCC00', '#9933FF'];
-            
-            for (let i = 0; i < powderCount; i++) {
-                const powder = document.createElement('div');
-                powder.classList.add('powder');
-                
-                // Set properties
-                const size = Math.random() * 15 + 5;
-                const color = particleColors[Math.floor(Math.random() * particleColors.length)];
-                
-                powder.style.width = `${size}px`;
-                powder.style.height = `${size}px`;
-                powder.style.backgroundColor = color;
-                powder.style.borderRadius = '50%';
-                powder.style.left = `${Math.random() * 100}%`;
-                powder.style.bottom = '-50px';
-                
-                // Randomize animation duration and delay
-                powder.style.animationDuration = `${Math.random() * 10 + 10}s`;
-                powder.style.animationDelay = `${Math.random() * 5}s`;
-                
-                document.body.appendChild(powder);
-            }
-        }
-
-        // Handle window resize
-        window.addEventListener('resize', positionMessages);
-
-        // Initialize
-        function init() {
-            createFloatingPowder();
-            createMessage(); // Create first message immediately
-            
-            // Create a new message every 3 seconds
-            setInterval(createMessage, 3000);
-        }
-
-        // Initialize everything when the page loads
-        window.addEventListener('load', init);
+      // Initialize everything when the page loads
+      window.addEventListener("load", init);
     </script>
-</body>
+  </body>
 </html>
