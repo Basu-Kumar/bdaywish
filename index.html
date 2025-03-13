@@ -1,395 +1,462 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <title>Happy New Year 2025!</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Holi 2025!</title>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      :root {
-        --title-size: clamp(2rem, 5vw, 4rem);
-        --message-size: clamp(1.5rem, 3vw, 2.5rem);
-        --button-size: clamp(1rem, 2vw, 1.2rem);
-        --spacing: clamp(10px, 2vw, 20px);
-      }
-
-      body {
-        margin: 0;
-        min-height: 100vh;
-        min-height: -webkit-fill-available;
-        background: linear-gradient(45deg, #000428, #004e92);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: Arial, sans-serif;
-        overflow: hidden;
-        color: white;
-        transition: background 2s ease;
-        padding: var(--spacing);
-      }
-
-      html {
-        height: -webkit-fill-available;
-      }
-
-      .container {
-        text-align: center;
-        position: relative;
-        z-index: 1;
-        width: 100%;
-        max-width: 800px;
-        padding: var(--spacing);
-      }
-
-      .title {
-        font-size: var(--title-size);
-        margin: var(--spacing);
-        background: linear-gradient(
-          90deg,
-          #ff0000,
-          #ff7300,
-          #fffb00,
-          #48ff00,
-          #00ffd5,
-          #002bff,
-          #7a00ff,
-          #ff00c8,
-          #ff0000
-        );
-        background-size: 200%;
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        animation: shine 2s linear infinite;
-        transition: transform 1s ease;
-        word-wrap: break-word;
-        line-height: 1.2;
-      }
-
-      .celebrate-btn {
-        padding: clamp(10px, 2vw, 15px) clamp(20px, 4vw, 30px);
-        font-size: var(--button-size);
-        background: linear-gradient(45deg, #ff6b6b, #ff9f43);
-        border: none;
-        border-radius: 25px;
-        color: white;
-        cursor: pointer;
-        transition: all 0.3s;
-        touch-action: manipulation;
-        -webkit-tap-highlight-color: transparent;
-      }
-
-      .celebrate-btn:hover {
-        transform: scale(1.1);
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-      }
-
-      .celebrate-btn:active {
-        transform: scale(0.95);
-      }
-
-      .firework {
-        position: absolute;
-        width: clamp(2px, 0.5vw, 4px);
-        height: clamp(2px, 0.5vw, 4px);
-        border-radius: 50%;
-        animation: explode 1s ease-out forwards;
-      }
-
-      .confetti {
-        position: absolute;
-        width: clamp(5px, 1vw, 10px);
-        height: clamp(5px, 1vw, 10px);
-        top: -20px;
-        animation: fall 3s linear forwards;
-      }
-
-      .falling-box {
-        position: absolute;
-        width: clamp(10px, 2vw, 20px);
-        height: clamp(10px, 2vw, 20px);
-        opacity: 0.7;
-        animation: boxFall 3s linear forwards;
-        z-index: 0;
-        border-radius: 2px;
-        box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
-        transform-origin: center;
-        top: -20px;
-      }
-
-      .message-container {
-        position: fixed;
-        top: 35%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        opacity: 0;
-        transition: opacity 1s ease;
-        display: none;
-        width: 90%;
-        max-width: 600px;
-        padding: var(--spacing);
-        z-index: 1;
-      }
-
-      .message {
-        font-size: var(--message-size);
-        margin: var(--spacing);
-        color: #fff;
-        text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-        animation: fadeInOut 4s ease-in-out forwards;
-        word-wrap: break-word;
-        line-height: 1.4;
-      }
-
-      @keyframes shine {
-        0% {
-          background-position: 0% 50%;
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        100% {
-          background-position: 200% 50%;
-        }
-      }
 
-      @keyframes explode {
-        0% {
-          transform: scale(1);
-          opacity: 1;
+        body {
+            overflow-x: hidden;
+            transition: background 1.5s ease;
+            background: linear-gradient(135deg, #FF0099, #FF9900);
+            min-height: 100vh;
         }
-        100% {
-          transform: scale(clamp(15, 4vw, 30));
-          opacity: 0;
-        }
-      }
 
-      @keyframes fall {
-        to {
-          transform: translateY(100vh) rotate(360deg);
-        }
-      }
-
-      @keyframes boxFall {
-        0% {
-          transform: translateY(0) rotate(0deg);
-          opacity: 0.7;
-        }
-        50% {
-          opacity: 0.9;
-        }
-        100% {
-          transform: translateY(100vh) rotate(360deg);
-          opacity: 0;
-        }
-      }
-
-      @keyframes fadeInOut {
-        0% {
-          opacity: 0;
-          transform: translateY(clamp(10px, 2vw, 20px));
-        }
-        20% {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        80% {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        100% {
-          opacity: 0;
-          transform: translateY(clamp(-10px, -2vw, -20px));
-        }
-      }
-
-      @media (max-height: 500px) {
+        /* Container Styles */
         .container {
-          transform: scale(0.8);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
+
+        /* Header Styles */
+        header {
+            padding: 10px 0;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+            animation: colorChange 5s infinite alternate;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+            animation: scaleText 2s infinite alternate;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: white;
+            max-width: 800px;
+            line-height: 1.6;
+            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Flowing Messages Section */
+        .message-container {
+            position: relative;
+            flex: 1;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
         .message {
-          font-size: calc(var(--message-size) * 0.8);
+            position: absolute;
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            color: white;
+            font-size: 1.6rem;
+            text-align: center;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: all 0.75s ease-out;
+            min-height: 100px; /* Increased minimum height */
+            max-height: 140px; /* Maximum height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px; /* Space between messages */
+            overflow: hidden; /* Prevent text overflow */
+            line-height: 1.3; /* Tighter line height for long messages */
         }
-      }
 
-      @media (orientation: landscape) and (max-height: 500px) {
-        .container {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-around;
-          gap: var(--spacing);
+        /* Message animations */
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translate3d(-100%, 0, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
         }
 
-        .title {
-          margin: 0;
-          flex: 1;
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translate3d(100%, 0, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
         }
-      }
 
-      @media (hover: none) {
-        .celebrate-btn:hover {
-          transform: none;
-          box-shadow: none;
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale3d(0.3, 0.3, 0.3);
+            }
+            50% {
+                opacity: 1;
+            }
         }
-      }
 
-      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-        .title,
-        .message {
-          text-rendering: optimizeLegibility;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
+        @keyframes bounceIn {
+            from, 20%, 40%, 60%, 80%, to {
+                animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            }
+            0% {
+                opacity: 0;
+                transform: scale3d(0.3, 0.3, 0.3);
+            }
+            20% {
+                transform: scale3d(1.1, 1.1, 1.1);
+            }
+            40% {
+                transform: scale3d(0.9, 0.9, 0.9);
+            }
+            60% {
+                opacity: 1;
+                transform: scale3d(1.03, 1.03, 1.03);
+            }
+            80% {
+                transform: scale3d(0.97, 0.97, 0.97);
+            }
+            to {
+                opacity: 1;
+                transform: scale3d(1, 1, 1);
+            }
         }
-      }
+
+        @keyframes flipInX {
+            from {
+                transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+                animation-timing-function: ease-in;
+                opacity: 0;
+            }
+            40% {
+                transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+                animation-timing-function: ease-in;
+            }
+            60% {
+                transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+                opacity: 1;
+            }
+            80% {
+                transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+            }
+            to {
+                transform: perspective(400px);
+                opacity: 1;
+            }
+        }
+
+        /* Footer */
+        footer {
+            padding: 15px 0;
+            text-align: center;
+            color: white;
+            font-size: 1.1rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Floating colored powders */
+        .powder {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0;
+            animation: float-powder 10s infinite linear;
+            z-index: 5;
+        }
+
+        @keyframes float-powder {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-800px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Animations */
+        @keyframes colorChange {
+            0% { color: #FF00FF; }
+            25% { color: #FF9900; }
+            50% { color: #FF3333; }
+            75% { color: #33CCFF; }
+            100% { color: #00FF66; }
+        }
+
+        @keyframes scaleText {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+
+        /* Message wrapper for text handling */
+        .message-text {
+            width: 100%;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Limit to 3 lines */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .hero p {
+                font-size: 1.2rem;
+            }
+            .message {
+                font-size: 1.3rem;
+                min-height: 90px;
+                max-height: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .message {
+                font-size: 1.1rem;
+                min-height: 80px;
+                max-height: 110px;
+                padding: 12px 15px;
+            }
+            .logo {
+                font-size: 2rem;
+            }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="container">
-      <h1 class="title">Happy New Year 2025!</h1>
-      <button class="celebrate-btn" onclick="celebrate()">Click here 🎉</button>
+        <header>
+            <div class="logo">Holi 2025</div>
+        </header>
+
+        <section class="hero">
+            <h1>Happy Holi!</h1>
+            <p>Celebrate the festival of colors with joy, happiness, and love. May your life be as colorful as the hues of Holi!</p>
+        </section>
+
+        <div class="message-container" id="messageContainer">
+            <!-- Messages will be dynamically added here -->
+        </div>
+
+        <footer>
+            <p>Wishing you and your loved ones a vibrant and joyous Holi celebration! 🎨✨</p>
+        </footer>
     </div>
-    <div class="message-container" id="messageContainer"></div>
 
     <script>
-      let celebrationInterval;
-      const backgrounds = [
-        "linear-gradient(45deg, #000428, #004e92)",
-        "linear-gradient(45deg, #200122, #6f0000)",
-        "linear-gradient(45deg, #1a2a6c, #b21f1f)",
-        "linear-gradient(45deg, #141e30, #243b55)",
-        "linear-gradient(45deg, #000000, #434343)",
-      ];
-
-      const messages = [
-        "🎉 Welcome to 2025! Let's make it extraordinary! 🌟",
-        "✨ May your dreams take flight in this new chapter! 🚀",
-        "🌈 Here's to 365 days of endless possibilities! 💫",
-        "❤️ Wishing you love, laughter, and success! 🍀",
-        "🌟 New year, new adventures, new memories! 🎊",
-        "🎯 May all your goals turn into achievements! 💪",
-        "🌺 Let your happiness bloom in 2025! 🌸",
-        "💫 Time to write your own success story! 📖",
-      ];
-
-      let currentBg = 0;
-      let messageIndex = 0;
-
-      function changeBackground() {
-        document.body.style.background = backgrounds[currentBg];
-        currentBg = (currentBg + 1) % backgrounds.length;
-      }
-
-      function createBox() {
-        const colors = [
-          "#FF69B4", // Hot Pink
-          "#4169E1", // Royal Blue
-          "#32CD32", // Lime Green
-          "#FFD700", // Gold
-          "#FF4500", // Orange Red
-          "#9370DB", // Medium Purple
-          "#00CED1", // Dark Turquoise
+        // Background color changing functionality with more vibrant colors
+        const backgroundColors = [
+            'linear-gradient(135deg, #FF0099, #FF9900)',
+            'linear-gradient(135deg, #9933FF, #00FFCC)',
+            'linear-gradient(135deg, #FF3333, #FFCC00)',
+            'linear-gradient(135deg, #00CCFF, #00FF66)',
+            'linear-gradient(135deg, #FF00CC, #FF6600)',
+            'linear-gradient(135deg, #FFCC00, #FF0066)',
+            'linear-gradient(135deg, #33CCFF, #9933FF)'
         ];
 
-        const box = document.createElement("div");
-        box.className = "falling-box";
+        let backgroundIndex = 0;
 
-        box.style.left = `${Math.random() * 98}vw`;
-        box.style.backgroundColor =
-          colors[Math.floor(Math.random() * colors.length)];
-        box.style.transform = `rotate(${Math.random() * 360}deg)`;
-
-        document.body.appendChild(box);
-        setTimeout(() => box.remove(), 3000);
-      }
-
-      function showMessage() {
-        const container = document.getElementById("messageContainer");
-        container.style.display = "block";
-        container.style.opacity = "1";
-
-        const message = document.createElement("div");
-        message.className = "message";
-        message.textContent = messages[messageIndex];
-        container.appendChild(message);
-
-        messageIndex = (messageIndex + 1) % messages.length;
-
-        setTimeout(() => {
-          message.remove();
-          if (container.children.length === 0) {
-            showMessage();
-          }
-        }, 4000);
-      }
-
-      function createFirework(x, y) {
-        const colors = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff"];
-        const firework = document.createElement("div");
-        firework.className = "firework";
-        firework.style.left = x + "px";
-        firework.style.top = y + "px";
-        firework.style.backgroundColor =
-          colors[Math.floor(Math.random() * colors.length)];
-        document.body.appendChild(firework);
-        setTimeout(() => firework.remove(), 1000);
-      }
-
-      function celebrate() {
-        document.querySelector(".container").style.display = "none";
-        showMessage();
-
-        for (let i = 0; i < 50; i++) {
-          setTimeout(() => {
-            createFirework(
-              Math.random() * window.innerWidth,
-              Math.random() * window.innerHeight
-            );
-            const confetti = document.createElement("div");
-            confetti.className = "confetti";
-            confetti.style.left = Math.random() * 100 + "vw";
-            confetti.style.backgroundColor = [
-              "#ff0000",
-              "#00ff00",
-              "#0000ff",
-              "#ffff00",
-              "#ff00ff",
-            ][Math.floor(Math.random() * 5)];
-            document.body.appendChild(confetti);
-            setTimeout(() => confetti.remove(), 3000);
-
-            createBox();
-          }, i * 50);
+        function changeBackground() {
+            backgroundIndex = (backgroundIndex + 1) % backgroundColors.length;
+            document.body.style.background = backgroundColors[backgroundIndex];
         }
 
-        if (!celebrationInterval) {
-          celebrationInterval = setInterval(() => {
-            for (let i = 0; i < 50; i++) {
-              setTimeout(() => {
-                createFirework(
-                  Math.random() * window.innerWidth,
-                  Math.random() * window.innerHeight
-                );
-                createBox();
-              }, i * 50);
-            }
-          }, 2000);
+        // Set interval to change background every 3 seconds
+        setInterval(changeBackground, 3000);
 
-          setInterval(() => {
-            if (Math.random() > 0.5) {
-              createBox();
+        // Flowing message functionality
+        const messageContainer = document.getElementById('messageContainer');
+        const messageTexts = [
+            "May your life be as colorful as the festivities of Holi!",
+            "Let the colors of Holi spread happiness and peace in your life.",
+            "Wishing you a Holi filled with sweet moments and colorful memories.",
+            "May God gift you all the colors of life, colors of joy, colors of happiness, colors of friendship.",
+            "Brighten up your life with the vibrant colors of Holi.",
+            "Let's celebrate the victory of good over evil on this auspicious day!",
+            "May this Holi bring the brightest colors to your life.",
+            "Wishing you a rainbow of joyful moments this Holi!",
+            "Fill your life with colors of love, friendship, and happiness.",
+            "Holi reminds us to spread love, not hate. Happy Holi!",
+            "Embrace the colors of Holi and let go of all your worries.",
+            "May the spirit of Holi bring you joy and prosperity."
+        ];
+
+        // Animation types for messages
+        const animationTypes = [
+            'fadeInLeft',
+            'fadeInRight',
+            'zoomIn',
+            'bounceIn',
+            'flipInX'
+        ];
+
+        let activeMessages = [];
+        const maxActiveMessages = 4; // Reduced maximum messages for better spacing
+        const messageSpacing = 155; // Increased spacing between messages in pixels
+
+        function createMessage() {
+            // Remove oldest message if we've reached max
+            if (activeMessages.length >= maxActiveMessages) {
+                const oldestMessage = activeMessages.shift();
+                oldestMessage.style.opacity = "0";
+                
+                // Remove from DOM after transition
+                setTimeout(() => {
+                    oldestMessage.remove();
+                }, 750);
             }
-          }, 200);
+            
+            // Create new message
+            const message = document.createElement('div');
+            message.classList.add('message');
+            
+            // Create wrapper for text to handle overflow properly
+            const messageTextWrapper = document.createElement('div');
+            messageTextWrapper.classList.add('message-text');
+            
+            // Random message text
+            const randomText = messageTexts[Math.floor(Math.random() * messageTexts.length)];
+            messageTextWrapper.textContent = randomText;
+            
+            // Add text wrapper to message container
+            message.appendChild(messageTextWrapper);
+            
+            // Random animation
+            const randomAnimation = animationTypes[Math.floor(Math.random() * animationTypes.length)];
+            message.style.animation = `${randomAnimation} 0.75s forwards`;
+            
+            // Random color to add variety
+            const hue = Math.floor(Math.random() * 360);
+            message.style.borderLeft = `5px solid hsl(${hue}, 100%, 50%)`;
+            
+            // Append to container
+            messageContainer.appendChild(message);
+            
+            // Add to active messages
+            activeMessages.push(message);
+            
+            // Position all messages
+            positionMessages();
         }
-      }
 
-      setInterval(changeBackground, 1700);
+        function positionMessages() {
+            const containerHeight = messageContainer.clientHeight;
+            
+            // Update position of all active messages with a smooth transition
+            activeMessages.forEach((msg, index) => {
+                // Calculate position from bottom of container
+                // Start with bottom position and move up for each message
+                const bottomPosition = 10 + (index * messageSpacing);
+                
+                // Set position with smooth transition
+                msg.style.bottom = `${bottomPosition}px`;
+                msg.style.opacity = "1";
+            });
+        }
+
+        // Create floating powder effects across the page
+        function createFloatingPowder() {
+            const powderCount = window.innerWidth < 768 ? 20 : 40;
+            const particleColors = ['#FF00FF', '#FF9900', '#33CCFF', '#00FF66', '#FF3333', '#FFCC00', '#9933FF'];
+            
+            for (let i = 0; i < powderCount; i++) {
+                const powder = document.createElement('div');
+                powder.classList.add('powder');
+                
+                // Set properties
+                const size = Math.random() * 15 + 5;
+                const color = particleColors[Math.floor(Math.random() * particleColors.length)];
+                
+                powder.style.width = `${size}px`;
+                powder.style.height = `${size}px`;
+                powder.style.backgroundColor = color;
+                powder.style.borderRadius = '50%';
+                powder.style.left = `${Math.random() * 100}%`;
+                powder.style.bottom = '-50px';
+                
+                // Randomize animation duration and delay
+                powder.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                powder.style.animationDelay = `${Math.random() * 5}s`;
+                
+                document.body.appendChild(powder);
+            }
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', positionMessages);
+
+        // Initialize
+        function init() {
+            createFloatingPowder();
+            createMessage(); // Create first message immediately
+            
+            // Create a new message every 3 seconds
+            setInterval(createMessage, 3000);
+        }
+
+        // Initialize everything when the page loads
+        window.addEventListener('load', init);
     </script>
-  </body>
+</body>
 </html>
